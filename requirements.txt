@@ -1,2 +1,2 @@
-livekit-agents[assemblyai,silero,openai,codecs]>=1.8.9
+livekit-agents[assemblyai,silero,openai,codecs]>=1.8.12
 python-dotenv

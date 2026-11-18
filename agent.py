@@ -30,7 +30,7 @@ async def entrypoint(ctx: agents.JobContext):
 
     session = AgentSession(
         stt=assemblyai.STT(
-            model="universal-3-6-pro",
+            model="assemblyai-stt-3-7-realtime-agent",  # AssemblyAI STT 3.7 Realtime Agent
             mode="balanced",               # min_turn_silence=128, max_turn_silence=1280
             vad_threshold=VAD_THRESHOLD,   # Match Silero's activation_threshold below
         ),

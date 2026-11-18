@@ -2,7 +2,7 @@
 
 A complete LiveKit Agents voice agent where AssemblyAI handles both speech ends:
 
-- **Speech-to-text:** [Universal-3.6 Pro Realtime](https://www.assemblyai.com/products/streaming-speech-to-text) (`universal-3-6-pro`) through `assemblyai.STT`, with AssemblyAI's own end-of-turn signal (`turn_detection="stt"`, `mode="balanced"`).
+- **Speech-to-text:** [AssemblyAI STT 3.7 Realtime Agent](https://www.assemblyai.com/products/streaming-speech-to-text) (`assemblyai-stt-3-7-realtime-agent`) through `assemblyai.STT`, with AssemblyAI's own end-of-turn signal (`turn_detection="stt"`, `mode="balanced"`).
 - **LLM:** OpenAI GPT-4o through the LiveKit OpenAI plugin.
 - **Text-to-speech:** [AssemblyAI text-to-speech](https://www.assemblyai.com/products/text-to-speech) (`assemblyai-tts-1`) through `assemblyai.TTS`, with the voice Kyla (`aai-kyla`) and word-aligned transcripts.
 
@@ -18,7 +18,7 @@ This is the companion repo for the tutorial: [Build a voice agent with LiveKit: 
 
 ## Quick start
 
-Requires Python 3.11 or later and `livekit-agents` 1.8.9 or later (the release that added `assemblyai.TTS`).
+Requires Python 3.11 or later and `livekit-agents` 1.8.12 or later. 1.8.12 is the first release whose AssemblyAI plugin accepts `assemblyai-stt-3-7-realtime-agent` (1.8.9 added `assemblyai.TTS`).
 
 ```bash
 git clone https://github.com/kelsey-aai/voice-agent-livekit-assemblyai
@@ -55,11 +55,13 @@ python agent.py dev
 
 - **One key for speech:** `assemblyai.STT` and `assemblyai.TTS` both read `ASSEMBLYAI_API_KEY`.
 - **Voice:** set `voice` explicitly. The plugin's own default voice differs from the API default, `aai-kyla`. `voice` takes a library slug, a voice ID (UUID) or a cloned voice's slug. See [Voices](https://www.assemblyai.com/docs/tts/voices).
-- **Turn detection:** with `turn_detection="stt"`, `mode="balanced"` applies `min_turn_silence=128` and `max_turn_silence=1280`. With `mode` unset, the plugin defaults both to 100 ms, which is too aggressive for STT-based turn detection.
+- **Turn detection:** with `turn_detection="stt"`, `mode="balanced"` applies `min_turn_silence=128` and `max_turn_silence=1280`, and entity-aware endpointing holds a turn open while a caller reads out a number. With `mode` unset, the plugin defaults both silences to 100 ms, which is too aggressive for STT-based turn detection.
+- **Previous model:** Universal-3.6 Pro Realtime (`universal-3-6-pro`) is still fully supported. Swap the `model` string if you need to pin it.
 - **VAD:** Silero's `activation_threshold` and the STT's `vad_threshold` are both 0.2, AssemblyAI's default, so the two agree on what counts as speech.
 
 ## Learn more
 
 - [Tutorial: Build a voice agent with LiveKit](https://www.assemblyai.com/blog/build-voice-agent-livekit)
-- [Universal-3.6 Pro on LiveKit](https://www.assemblyai.com/docs/voice-agents/livekit-universal-3-6-pro)
+- [AssemblyAI on LiveKit (docs)](https://www.assemblyai.com/docs/voice-agents/livekit-universal-3-6-pro)
+- [Model selection](https://www.assemblyai.com/docs/streaming/select-the-speech-model)
 - [Streaming TTS on LiveKit](https://www.assemblyai.com/docs/tts/livekit)
